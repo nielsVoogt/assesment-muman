@@ -1,0 +1,194 @@
+{
+    "appointments": [
+        {
+            "customer": {
+                "firstName": "Johan",
+                "lastName": "Bakker",
+                "phone": "555-1234"
+            },
+            "date": "2023-07-03T09:00:00Z",
+            "reason": ["maintenance"],
+            "remarks": "Graag de remmen controleren."
+        },
+        {
+            "customer": {
+                "firstName": "Lotte",
+                "lastName": "Smits",
+                "phone": "555-5678"
+            },
+            "date": "2023-07-03T14:30:00Z",
+            "reason": ["warranty"],
+            "remarks": "Probleem met de versnellingen."
+        },
+        {
+            "customer": {
+                "firstName": "Michiel",
+                "lastName": "Jansen",
+                "phone": "555-9876"
+            },
+            "date": "2023-07-03T16:45:00Z",
+            "reason": ["maintenance", "other"],
+            "remarks": "Vervang versleten ketting."
+        },
+        {
+            "customer": {
+                "firstName": "Emma",
+                "lastName": "De Vries",
+                "phone": "555-4321"
+            },
+            "date": "2023-07-03T17:15:00Z",
+            "reason": ["maintenance"],
+            "remarks": "Strakker zetten van het stuur."
+        },
+        {
+            "customer": {
+                "firstName": "Daan",
+                "lastName": "Visser",
+                "phone": "555-2468"
+            },
+            "date": "2023-07-04T09:30:00Z",
+            "reason": ["maintenance"],
+            "remarks": "Vervangen van een lekke band."
+        },
+        {
+            "customer": {
+                "firstName": "Luna",
+                "lastName": "Bosman",
+                "phone": "555-1357"
+            },
+            "date": "2023-07-04T13:00:00Z",
+            "reason": ["warranty"],
+            "remarks": "Probleem met de bel."
+        },
+        {
+            "customer": {
+                "firstName": "Sem",
+                "lastName": "De Groot",
+                "phone": "555-8642"
+            },
+            "date": "2023-07-04T16:15:00Z",
+            "reason": ["maintenance"],
+            "remarks": "Verstellen van de zithoogte."
+        },
+        {
+            "customer": {
+                "firstName": "Fleur",
+                "lastName": "Jacobs",
+                "phone": "555-2468"
+            },
+            "date": "2023-07-05T10:30:00Z",
+            "reason": ["maintenance", "other"],
+            "remarks": "Vervangen van versleten pedalen."
+        },
+        {
+            "customer": {
+                "firstName": "Thomas",
+                "lastName": "Hendriks",
+                "phone": "555-9753"
+            },
+            "date": "2023-07-05T13:45:00Z",
+            "reason": ["maintenance"],
+            "remarks": "Controleren en afstellen van de versnellingen."
+        },
+        {
+            "customer": {
+                "firstName": "Eva",
+                "lastName": "Meijer",
+                "phone": "555-6248"
+            },
+            "date": "2023-07-05T15:00:00Z",
+            "reason": ["maintenance"],
+            "remarks": "Smeren van de ketting."
+        },
+        {
+            "customer": {
+                "firstName": "Milan",
+                "lastName": "Peters",
+                "phone": "555-3698"
+            },
+            "date": "2023-07-06T09:15:00Z",
+            "reason": ["warranty"],
+            "remarks": "Probleem met de remmen."
+        },
+        {
+            "customer": {
+                "firstName": "Julia",
+                "lastName": "Vos",
+                "phone": "555-7042"
+            },
+            "date": "2023-07-06T11:30:00Z",
+            "reason": ["maintenance"],
+            "remarks": "Vervangen van een lekke band."
+        },
+        {
+            "customer": {
+                "firstName": "Luuk",
+                "lastName": "Kramer",
+                "phone": "555-9876"
+            },
+            "date": "2023-07-06T14:45:00Z",
+            "reason": ["maintenance", "other"],
+            "remarks": "Repareren van een kapotte bel."
+        },
+        {
+            "customer": {
+                "firstName": "Mila",
+                "lastName": "Van Dam",
+                "phone": "555-1234"
+            },
+            "date": "2023-07-06T16:00:00Z",
+            "reason": ["maintenance"],
+            "remarks": "Verstel het zadel naar de juiste hoogte."
+        },
+        {
+            "customer": {
+                "firstName": "Ruben",
+                "lastName": "Smit",
+                "phone": "555-8642"
+            },
+            "date": "2023-07-07T09:30:00Z",
+            "reason": ["maintenance"],
+            "remarks": "Vervangen van een versleten ketting."
+        },
+        {
+            "customer": {
+                "firstName": "Sara",
+                "lastName": "Verbeek",
+                "phone": "555-1357"
+            },
+            "date": "2023-07-07T12:45:00Z",
+            "reason": ["warranty"],
+            "remarks": "Probleem met het stuur."
+        },
+        {
+            "customer": {
+                "firstName": "Sam",
+                "lastName": "Brouwer",
+                "phone": "555-2468"
+            },
+            "date": "2023-07-07T15:00:00Z",
+            "reason": ["maintenance"],
+            "remarks": "Schoonmaken en smeren van de ketting."
+        },
+        {
+            "customer": {
+                "firstName": "Sophie",
+                "lastName": "Hoekstra",
+                "phone": "555-9753"
+            },
+            "date": "2023-07-07T17:15:00Z",
+            "reason": ["maintenance", "other"],
+            "remarks": "Vervangen van versleten remblokjes."
+        },
+        {
+            "customer": {
+                "firstName": "Daan",
+                "lastName": "Visser",
+                "phone": "555-1234"
+            },
+            "date": "2023-07-10T09:30:00Z",
+            "reason": ["maintenance"],
+            "remarks": "Controleren en afstellen van de remmen."
+        }
+    ]
+}
