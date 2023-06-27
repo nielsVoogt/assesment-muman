@@ -18,3 +18,16 @@
    ```sh
    npm run dev
    ```
+
+
+   // {
+//     "customer": {
+//         "firstName": "Daan",
+//         "lastName": "Visser",
+//         "phone": "555-1234"
+//     },
+//     "date": "2023-07-10",
+//     "slot": 3,
+//     "reason": ["maintenance"],
+//     "remarks": "Controleren en afstellen van de remmen."
+// }
