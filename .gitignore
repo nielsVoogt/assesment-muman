@@ -24,4 +24,4 @@ dist-ssr
 *.sw?
 
 # DB will be updated per session, so whe can disregard any changes from now on
-mock/*
+mock
