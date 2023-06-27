@@ -1,42 +1,54 @@
 <template>
   <p>Appointment form</p>
   <form>
-    <FormGroup :errors="v$.form.firstName.$errors" :label="'test'">
+    <FormGroup :errors="v$.form.customer.firstName.$errors" :label="'test'">
       <input
         type="text"
         id="firstName"
-        v-model="form.firstName"
+        v-model="form.customer.firstName"
         placeholder="firstName"
-        @blur="v$.form.firstName.$touch"
+        @blur="v$.form.customer.firstName.$touch"
       />
     </FormGroup>
 
-    <FormGroup :errors="v$.form.lastName.$errors" :label="'test'">
+    <FormGroup :errors="v$.form.customer.lastName.$errors" :label="'test'">
       <input
         type="text"
         id="lastName"
-        v-model="form.lastName"
+        v-model="form.customer.lastName"
         placeholder="lastName"
-        @blur="v$.form.lastName.$touch"
+        @blur="v$.form.customer.lastName.$touch"
       />
     </FormGroup>
 
-    <FormGroup :errors="v$.form.phonenumber.$errors" :label="'test'">
+    <FormGroup :errors="v$.form.customer.phonenumber.$errors" :label="'test'">
       <input
         type="text"
         id="phonenumber"
-        v-model="form.phonenumber"
+        v-model="form.customer.phonenumber"
         placeholder="phonenumber"
       />
     </FormGroup>
 
     <FormGroup :errors="v$.form.reason.$errors" :label="'test'">
-      <select name="reason" id="reason" v-model="form.reason">
-        <option value="">Select a reason</option>
-        <option value="warranty">Warranty</option>
-        <option value="maintenance">Maintenance</option>
-        <option value="other">Other</option>
-      </select>
+      <input
+        type="checkbox"
+        id="warranty"
+        value="warranty"
+        v-model="form.reason"
+      />
+      <label for="warranty">Warranty</label>
+
+      <input
+        type="checkbox"
+        id="maintenance"
+        value="maintenance"
+        v-model="form.reason"
+      />
+      <label for="maintenance">Maintenance</label>
+
+      <input type="checkbox" id="other" value="other" v-model="form.reason" />
+      <label for="other">other</label>
     </FormGroup>
 
     <FormGroup :errors="v$.form.remarks.$errors" :label="'test'">
@@ -63,12 +75,11 @@
         </button>
       </li>
     </ul>
-
-    <!-- submit -->
-    <input type="submit" />
   </form>
 
-  <br />
+  {{ form }}
+
+  <button @click="post">post</button>
 </template>
 
 <script>
@@ -88,18 +99,36 @@ export default {
   data() {
     return {
       form: {
-        firstName: "",
-        lastName: "",
-        phonenumber: "",
-        reason: "",
-        remarks: "",
+        customer: {
+          firstName: "",
+          lastName: "",
+          phone: "",
+        },
         date: null,
+        reason: [],
+        remarks: "",
       },
+      selectedTimeSlot: "",
       unavailableSlots: [],
       allSlots,
     };
   },
   methods: {
+    async post() {
+      const url = `http://localhost:3000/appointments`;
+      const response = await fetch(url, {
+        method: "POST",
+        body: JSON.stringify(this.form),
+        headers: { "Content-type": "application/json; charset=UTF-8" },
+      });
+
+      if (response.ok) {
+        console.log("feestje!");
+      } else {
+        // show error
+      }
+    },
+
     async getUnavailableSlots() {
       this.unavailableSlots = [];
 
@@ -116,9 +145,11 @@ export default {
   validations() {
     return {
       form: {
-        firstName: { required },
-        lastName: { required },
-        phonenumber: { required },
+        customer: {
+          firstName: { required },
+          lastName: { required },
+          phonenumber: { required },
+        },
         reason: { required },
         remarks: { required },
         date: { required },
