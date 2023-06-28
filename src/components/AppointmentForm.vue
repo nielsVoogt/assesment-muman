@@ -24,27 +24,16 @@
     <FormGroup :errors="v$.form.customer.phonenumber.$errors" :label="'test'">
       <input
         type="text"
-        id="phonenumber"
         v-model="form.customer.phonenumber"
         placeholder="phonenumber"
       />
     </FormGroup>
 
     <FormGroup :errors="v$.form.reason.$errors" :label="'test'">
-      <input
-        type="checkbox"
-        id="warranty"
-        value="warranty"
-        v-model="form.reason"
-      />
+      <input type="checkbox" value="warranty" v-model="form.reason" />
       <label for="warranty">Warranty</label>
 
-      <input
-        type="checkbox"
-        id="maintenance"
-        value="maintenance"
-        v-model="form.reason"
-      />
+      <input type="checkbox" value="maintenance" v-model="form.reason" />
       <label for="maintenance">Maintenance</label>
 
       <input type="checkbox" id="other" value="other" v-model="form.reason" />
@@ -53,7 +42,6 @@
 
     <FormGroup :errors="v$.form.remarks.$errors" :label="'test'">
       <textarea
-        id="remarks"
         name="remarks"
         rows="5"
         placeholder="Please do ..."
@@ -62,19 +50,10 @@
     </FormGroup>
 
     <FormGroup :errors="v$.form.date.$errors">
-      <input type="date" v-model="form.date" @input="getUnavailableSlots" />
+      <input type="date" v-model="selectedDate" />
     </FormGroup>
 
-    <ul v-if="form.date" class="slot-list">
-      <li v-for="slot in allSlots" class="slot-list-item">
-        <button
-          class="slot-button"
-          :disabled="unavailableSlots.find((e) => e === slot)"
-        >
-          {{ slot }}
-        </button>
-      </li>
-    </ul>
+    <TimeSlots :selected-date="selectedDate" @select-slot="setDateTimeSlot" />
   </form>
 
   {{ form }}
@@ -83,18 +62,19 @@
 </template>
 
 <script>
-import moment from "moment";
-import { allSlots } from "../allSlots";
 import { useVuelidate } from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
+
+import TimeSlots from "./TimeSlots.vue";
 import FormGroup from "./FormGroup.vue";
 
 export default {
   components: {
     FormGroup,
+    TimeSlots,
   },
   setup() {
-    return { v$: useVuelidate(), moment };
+    return { v$: useVuelidate() };
   },
   data() {
     return {
@@ -108,38 +88,27 @@ export default {
         reason: [],
         remarks: "",
       },
-      selectedTimeSlot: "",
-      unavailableSlots: [],
-      allSlots,
+      selectedDate: false,
     };
   },
   methods: {
     async post() {
       const url = `http://localhost:3000/appointments`;
-      const response = await fetch(url, {
+      const res = await fetch(url, {
         method: "POST",
         body: JSON.stringify(this.form),
         headers: { "Content-type": "application/json; charset=UTF-8" },
       });
 
-      if (response.ok) {
+      if (res.ok) {
         console.log("feestje!");
       } else {
-        // show error
+        console.log("paniek!");
       }
     },
 
-    async getUnavailableSlots() {
-      this.unavailableSlots = [];
-
-      const url = `http://localhost:3000/appointments?q=${this.form.date}`;
-      const response = await fetch(url);
-      const data = await response.json();
-
-      data.forEach((appointment) => {
-        const slotTime = moment(appointment.date).format("hh:mm");
-        this.unavailableSlots.push(slotTime);
-      });
+    setDateTimeSlot(time) {
+      console.log("I selected", time);
     },
   },
   validations() {
@@ -158,32 +127,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss">
-// TEMPDUMP
-.slot-list {
-  margin: 0;
-  padding: 0;
-  max-width: 500px;
-  width: 100%;
-  display: grid;
-  grid-gap: 0.25rem;
-  grid-template-columns: repeat(auto-fill, minmax(20%, 1fr));
-
-  .slot-list-item {
-    margin: 0;
-    padding: 0;
-    text-indent: 0;
-    list-style-type: 0;
-    list-style: none;
-
-    button {
-      width: 100%;
-
-      &:disabled {
-        background: red;
-      }
-    }
-  }
-}
-</style>
