@@ -12,7 +12,7 @@
         </button>
       </li>
     </ul>
-    <div v-else>No date selected</div>
+    <!-- <div v-else>No date selected</div> -->
   </div>
 </template>
 <script>
@@ -72,7 +72,6 @@ export default {
   grid-gap: 0.5rem;
   grid-template-columns: repeat(5, 1fr);
   list-style: none;
-  max-width: 330px;
   width: 100%;
   aspect-ratio: 1 / 1;
 
@@ -82,6 +81,19 @@ export default {
     height: 100%;
     width: 100%;
   }
+}
+
+.slot-container {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+
+  background-color: #fafafa;
+  border: 1px solid rgba(0, 0, 0, 10%);
+  border-radius: 0.25rem;
+  border-style: dashed;
+  display: grid;
+  justify-content: center;
+  align-content: center;
 }
 
 li,

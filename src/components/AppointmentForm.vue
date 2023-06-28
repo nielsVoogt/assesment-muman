@@ -1,20 +1,23 @@
 <template>
   <p>Appointment form</p>
-  <form>
-    <FormGroup :errors="v$.form.customer.firstName.$errors" :label="'test'">
+  <form class="appointment-form">
+    <FormGroup
+      :errors="v$.form.customer.firstName.$errors"
+      :label="'First name'"
+    >
       <input
+        class="form-control"
         type="text"
-        id="firstName"
         v-model="form.customer.firstName"
         placeholder="firstName"
         @blur="v$.form.customer.firstName.$touch"
       />
     </FormGroup>
 
-    <FormGroup :errors="v$.form.customer.lastName.$errors" :label="'test'">
+    <FormGroup :errors="v$.form.customer.lastName.$errors" :label="'Last name'">
       <input
+        class="form-control"
         type="text"
-        id="lastName"
         v-model="form.customer.lastName"
         placeholder="lastName"
         @blur="v$.form.customer.lastName.$touch"
@@ -23,24 +26,25 @@
 
     <FormGroup :errors="v$.form.customer.phonenumber.$errors" :label="'test'">
       <input
-        type="text"
+        class="form-control"
+        type="tel"
         v-model="form.customer.phonenumber"
         placeholder="phonenumber"
       />
     </FormGroup>
 
     <FormGroup :errors="v$.form.reason.$errors" :label="'test'">
-      <label for="warranty">
+      <label class="form-checkbox">
         <input type="checkbox" value="warranty" v-model="form.reason" />
         <span>Warranty</span>
       </label>
 
-      <label for="maintenance">
+      <label class="form-checkbox">
         <input type="checkbox" value="maintenance" v-model="form.reason" />
         <span>Maintenance</span>
       </label>
 
-      <label for="other">
+      <label class="form-checkbox">
         <input type="checkbox" id="other" value="other" v-model="form.reason" />
         <span>Other</span>
       </label>
@@ -48,6 +52,7 @@
 
     <FormGroup :errors="v$.form.remarks.$errors" :label="'test'">
       <textarea
+        class="form-control"
         name="remarks"
         rows="5"
         placeholder="Please do ..."
@@ -58,7 +63,16 @@
     <FormGroup :errors="v$.form.date.$errors">
       <DatePicker v-model="form.date">
         <template #default="{ togglePopover }">
-          <button @click="togglePopover" type="button">Select date</button>
+          <div @click="togglePopover" class="form-datepicker">
+            <span>
+              {{
+                form.date
+                  ? Intl.DateTimeFormat("nl-NL").format(form.date)
+                  : "Select a date"
+              }}
+            </span>
+            <img src="@/assets/calendar.svg?url" />
+          </div>
         </template>
       </DatePicker>
     </FormGroup>
@@ -103,8 +117,6 @@ export default {
         reason: [],
         remarks: "",
       },
-      // selectedDate: false,
-      // testDate: null,
     };
   },
   methods: {

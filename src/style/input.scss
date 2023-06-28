@@ -1,0 +1,30 @@
+.form-group {
+
+  .form-control,
+  .form-datepicker {
+    width: 100%;
+    display: block;
+    padding: .75rem;
+    border-radius: .25rem;
+    background-color: #FAFAFA;
+    border: 1px solid rgba(0,0,0,10%);
+  }
+
+  &--error {
+    .form-control {
+      border-color: red;
+    }
+  }
+
+  .form-datepicker {
+    display: flex;
+    
+    img {
+      margin-left: auto;
+    }
+  }
+
+  .form-group-label {
+    font-weight: 600;
+  }
+}

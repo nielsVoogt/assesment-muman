@@ -1,6 +1,6 @@
 <template>
   <div :class="['form-group', { 'form-group--error': errors.length }]">
-    <label>{{ label }}</label>
+    <label class="form-group-label">{{ label }}</label>
     <slot></slot>
     <div class="input-errors" v-for="error of errors" :key="error.$uid">
       <div class="error-msg">{{ error.$message }}</div>
