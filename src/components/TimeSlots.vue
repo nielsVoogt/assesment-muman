@@ -1,20 +1,18 @@
 <template>
-  <div class="slot-container">
-    <ul v-if="date" class="slot-list">
-      <li v-for="slot in slots" class="slot-list-item">
-        <button
-          type="button"
-          class="slot-button"
-          :disabled="unavailableSlots.find((e) => e === slot)"
-          @click="$emit('selectSlot', slot)"
-        >
-          {{ slot }}
-        </button>
-      </li>
-    </ul>
-    <!-- <div v-else>No date selected</div> -->
-  </div>
+  <ul class="slot-list">
+    <li v-for="slot in slots" class="slot-list-item">
+      <button
+        type="button"
+        class="slot-button"
+        :disabled="unavailableSlots.find((e) => e === slot)"
+        @click="$emit('selectSlot', slot)"
+      >
+        {{ slot }}
+      </button>
+    </li>
+  </ul>
 </template>
+
 <script>
 import moment from "moment";
 
@@ -36,9 +34,9 @@ export default {
     const slots = [];
 
     for (let i = 0; i < 32; i++) {
-      const slotTime = moment("09:00", "hh:mm")
+      const slotTime = moment("09:00", "HH:mm")
         .add(15 * i, "minutes")
-        .format("hh:mm");
+        .format("HH:mm");
       slots.push(slotTime);
     }
 
@@ -91,9 +89,9 @@ export default {
   border: 1px solid rgba(0, 0, 0, 10%);
   border-radius: 0.25rem;
   border-style: dashed;
-  display: grid;
-  justify-content: center;
-  align-content: center;
+  // display: grid;
+  // justify-content: center;
+  // align-content: center;
 }
 
 li,

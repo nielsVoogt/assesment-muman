@@ -23,14 +23,3 @@ export default {
   },
 };
 </script>
-
-<style scoped lang="scss">
-.form-group {
-  margin-bottom: 1rem;
-
-  label {
-    margin-bottom: 0.25rem;
-    display: block;
-  }
-}
-</style>

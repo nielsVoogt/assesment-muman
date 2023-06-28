@@ -1,6 +1,6 @@
 <template>
   <p>Appointment form</p>
-  <form class="appointment-form">
+  <form class="appointment-form" @submit.prevent="onSubmit">
     <FormGroup
       :errors="v$.form.customer.firstName.$errors"
       :label="'First name'"
@@ -24,7 +24,10 @@
       />
     </FormGroup>
 
-    <FormGroup :errors="v$.form.customer.phonenumber.$errors" :label="'test'">
+    <FormGroup
+      :errors="v$.form.customer.phonenumber.$errors"
+      :label="'phonenumber'"
+    >
       <input
         class="form-control"
         type="tel"
@@ -33,7 +36,7 @@
       />
     </FormGroup>
 
-    <FormGroup :errors="v$.form.reason.$errors" :label="'test'">
+    <FormGroup :errors="v$.form.reason.$errors" :label="'Reason'">
       <label class="form-checkbox">
         <input type="checkbox" value="warranty" v-model="form.reason" />
         <span>Warranty</span>
@@ -50,7 +53,7 @@
       </label>
     </FormGroup>
 
-    <FormGroup :errors="v$.form.remarks.$errors" :label="'test'">
+    <FormGroup :errors="v$.form.remarks.$errors" :label="'Remarks'">
       <textarea
         class="form-control"
         name="remarks"
@@ -60,7 +63,7 @@
       ></textarea>
     </FormGroup>
 
-    <FormGroup :errors="v$.form.date.$errors">
+    <FormGroup :errors="v$.form.date.$errors" :label="'Date'">
       <DatePicker v-model="form.date">
         <template #default="{ togglePopover }">
           <div @click="togglePopover" class="form-datepicker">
@@ -76,13 +79,21 @@
         </template>
       </DatePicker>
     </FormGroup>
+    <FormGroup
+      v-if="form.date"
+      :errors="v$.form.time.$errors"
+      :label="'Select a timeslot'"
+    >
+      <TimeSlots :date="form.date" @select-slot="setTime" />
+    </FormGroup>
 
-    <TimeSlots :date="form.date" @select-slot="setDateTimeSlot" />
+    <button class="button" type="submit" @click="post">
+      <img src="@/assets/send.svg?url" class="button-icon" />
+      <span> Save your date and timeslot </span>
+    </button>
   </form>
 
-  {{ form }}
-
-  <button @click="post">post</button>
+  <!-- {{ form }} -->
 </template>
 
 <script>
@@ -94,6 +105,8 @@ import FormGroup from "./FormGroup.vue";
 
 import { Calendar, DatePicker } from "v-calendar";
 import "v-calendar/style.css";
+
+import moment from "moment";
 
 export default {
   components: {
@@ -114,17 +127,26 @@ export default {
           phone: "",
         },
         date: null,
+        time: null,
         reason: [],
         remarks: "",
       },
     };
   },
   methods: {
-    async post() {
+    async onSubmit() {
+      const { time, date, ...payload } = this.form;
+
+      // Combine date and time
+      const dateTime = moment(date + time, "YYYY-MM-DDTHH:mm:ss.SSSS[Z]");
+
+      // Add to payload object
+      payload.date = dateTime;
+
       const url = `http://localhost:3000/appointments`;
       const res = await fetch(url, {
         method: "POST",
-        body: JSON.stringify(this.form),
+        body: JSON.stringify(payload),
         headers: { "Content-type": "application/json; charset=UTF-8" },
       });
 
@@ -135,8 +157,8 @@ export default {
       }
     },
 
-    setDateTimeSlot(time) {
-      console.log("I selected", time);
+    setTime(time) {
+      this.form.time = time;
     },
   },
   validations() {
@@ -150,6 +172,7 @@ export default {
         reason: { required },
         remarks: { required },
         date: { required },
+        time: { required },
       },
     };
   },

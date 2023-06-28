@@ -48,9 +48,16 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: #FFE600;
   cursor: pointer;
   transition: border-color 0.25s;
+  color: #060606;
+  width: 100%;
+
+  .button-icon {
+    display: inline-block;
+    vertical-align: middle;
+  }
   
   &:hover {
     border-color: #646cff;
@@ -68,3 +75,4 @@ button {
   max-width: 550px;
   margin: auto;
 }
+
