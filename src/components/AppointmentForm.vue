@@ -30,14 +30,20 @@
     </FormGroup>
 
     <FormGroup :errors="v$.form.reason.$errors" :label="'test'">
-      <input type="checkbox" value="warranty" v-model="form.reason" />
-      <label for="warranty">Warranty</label>
+      <label for="warranty">
+        <input type="checkbox" value="warranty" v-model="form.reason" />
+        <span>Warranty</span>
+      </label>
 
-      <input type="checkbox" value="maintenance" v-model="form.reason" />
-      <label for="maintenance">Maintenance</label>
+      <label for="maintenance">
+        <input type="checkbox" value="maintenance" v-model="form.reason" />
+        <span>Maintenance</span>
+      </label>
 
-      <input type="checkbox" id="other" value="other" v-model="form.reason" />
-      <label for="other">other</label>
+      <label for="other">
+        <input type="checkbox" id="other" value="other" v-model="form.reason" />
+        <span>Other</span>
+      </label>
     </FormGroup>
 
     <FormGroup :errors="v$.form.remarks.$errors" :label="'test'">
@@ -50,10 +56,14 @@
     </FormGroup>
 
     <FormGroup :errors="v$.form.date.$errors">
-      <input type="date" v-model="selectedDate" />
+      <DatePicker v-model="form.date">
+        <template #default="{ togglePopover }">
+          <button @click="togglePopover" type="button">Select date</button>
+        </template>
+      </DatePicker>
     </FormGroup>
 
-    <TimeSlots :selected-date="selectedDate" @select-slot="setDateTimeSlot" />
+    <TimeSlots :date="form.date" @select-slot="setDateTimeSlot" />
   </form>
 
   {{ form }}
@@ -68,10 +78,15 @@ import { required } from "@vuelidate/validators";
 import TimeSlots from "./TimeSlots.vue";
 import FormGroup from "./FormGroup.vue";
 
+import { Calendar, DatePicker } from "v-calendar";
+import "v-calendar/style.css";
+
 export default {
   components: {
     FormGroup,
     TimeSlots,
+    Calendar,
+    DatePicker,
   },
   setup() {
     return { v$: useVuelidate() };
@@ -88,7 +103,8 @@ export default {
         reason: [],
         remarks: "",
       },
-      selectedDate: false,
+      // selectedDate: false,
+      // testDate: null,
     };
   },
   methods: {

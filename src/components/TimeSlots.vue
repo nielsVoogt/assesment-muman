@@ -1,6 +1,6 @@
 <template>
   <div class="slot-container">
-    <ul v-if="selectedDate" class="slot-list">
+    <ul v-if="date" class="slot-list">
       <li v-for="slot in slots" class="slot-list-item">
         <button
           type="button"
@@ -21,8 +21,8 @@ import moment from "moment";
 export default {
   name: "TimeSlots",
   props: {
-    selectedDate: {
-      type: [String, Boolean],
+    date: {
+      type: [Date, null],
       required: true,
     },
   },
@@ -45,10 +45,10 @@ export default {
     return { moment, slots };
   },
   methods: {
-    async getUnavailableSlots(date) {
+    async getUnavailableSlots() {
       this.unavailableSlots = [];
-
-      const url = `http://localhost:3000/appointments?q=${this.selectedDate}`;
+      const date = moment(this.date).format("YYYY-MM-DD");
+      const url = `http://localhost:3000/appointments?q=${date}`;
       const response = await fetch(url);
       const data = await response.json();
 
@@ -59,7 +59,7 @@ export default {
     },
   },
   watch: {
-    selectedDate(n, _) {
+    date() {
       this.getUnavailableSlots();
     },
   },
