@@ -1,5 +1,4 @@
 <template>
-  <p>Appointment form</p>
   <form class="appointment-form" @submit.prevent="onSubmit">
     <FormGroup
       :errors="v$.form.customer.firstName.$errors"
@@ -9,7 +8,7 @@
         class="form-control"
         type="text"
         v-model="form.customer.firstName"
-        placeholder="firstName"
+        placeholder="Your firstname"
         @blur="v$.form.customer.firstName.$touch"
       />
     </FormGroup>
@@ -19,41 +18,44 @@
         class="form-control"
         type="text"
         v-model="form.customer.lastName"
-        placeholder="lastName"
+        placeholder="Your lastname"
         @blur="v$.form.customer.lastName.$touch"
       />
     </FormGroup>
 
     <FormGroup
       :errors="v$.form.customer.phonenumber.$errors"
-      :label="'phonenumber'"
+      :label="'Phonenumber'"
     >
       <input
         class="form-control"
         type="tel"
         v-model="form.customer.phonenumber"
-        placeholder="phonenumber"
+        placeholder="Your phonenumber"
       />
     </FormGroup>
 
     <FormGroup :errors="v$.form.reason.$errors" :label="'Reason'">
       <label class="form-checkbox">
         <input type="checkbox" value="warranty" v-model="form.reason" />
-        <span>Warranty</span>
+        <span class="form-checkbox-border"></span>
+        Warranty
       </label>
 
       <label class="form-checkbox">
         <input type="checkbox" value="maintenance" v-model="form.reason" />
-        <span>Maintenance</span>
+        <span class="form-checkbox-border"></span>
+        Maintenance
       </label>
 
       <label class="form-checkbox">
-        <input type="checkbox" id="other" value="other" v-model="form.reason" />
-        <span>Other</span>
+        <input type="checkbox" value="other" v-model="form.reason" />
+        <span class="form-checkbox-border"></span>
+        Other
       </label>
     </FormGroup>
 
-    <FormGroup :errors="v$.form.remarks.$errors" :label="'Remarks'">
+    <FormGroup :errors="false" :label="'Remarks'">
       <textarea
         class="form-control"
         name="remarks"
@@ -66,13 +68,9 @@
     <FormGroup :errors="v$.form.date.$errors" :label="'Date'">
       <DatePicker v-model="form.date">
         <template #default="{ togglePopover }">
-          <div @click="togglePopover" class="form-datepicker">
+          <div @click="togglePopover" class="form-datepicker" tabindex="0">
             <span>
-              {{
-                form.date
-                  ? Intl.DateTimeFormat("nl-NL").format(form.date)
-                  : "Select a date"
-              }}
+              {{ form.date ? formattedDate : "Select a date" }}
             </span>
             <img src="@/assets/calendar.svg?url" />
           </div>
@@ -86,14 +84,11 @@
     >
       <TimeSlots :date="form.date" @select-slot="setTime" />
     </FormGroup>
-
+    {{ v$.form.invalid }}
     <button class="button" type="submit" @click="post">
-      <img src="@/assets/send.svg?url" class="button-icon" />
       <span> Save your date and timeslot </span>
     </button>
   </form>
-
-  <!-- {{ form }} -->
 </template>
 
 <script>
@@ -133,8 +128,16 @@ export default {
       },
     };
   },
+  computed: {
+    formattedDate: function () {
+      return moment(this.form.date).format("DD-MM-YYYY");
+    },
+  },
   methods: {
     async onSubmit() {
+      const isFormCorrect = await this.v$.$validate();
+      if (!isFormCorrect) return;
+
       const { time, date, ...payload } = this.form;
 
       // Combine date and time
@@ -156,7 +159,6 @@ export default {
         console.log("paniek!");
       }
     },
-
     setTime(time) {
       this.form.time = time;
     },
@@ -170,7 +172,6 @@ export default {
           phonenumber: { required },
         },
         reason: { required },
-        remarks: { required },
         date: { required },
         time: { required },
       },

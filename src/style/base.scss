@@ -26,25 +26,29 @@ a {
 body {
   margin: 0;
   padding: 0;
-
-  a {
-    color: red;
-  }
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+p {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
 }
 
 button {
   border: 0;
+  background: none;
+}
+
+.appointment-form {
+  .button {
+    margin-top: 1rem;
+  }
 }
 
 .button {
   border-radius: 8px;
   border: 1px solid transparent;
-  padding: 0.6em 1.2em;
+  padding: .75rem;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
@@ -54,25 +58,86 @@ button {
   color: #060606;
   width: 100%;
 
-  .button-icon {
-    display: inline-block;
-    vertical-align: middle;
-  }
-  
-  &:hover {
-    border-color: #646cff;
-  }
-  
   &:focus,
   &:focus-visible {
     outline: 4px auto -webkit-focus-ring-color;
   }
 }
 
-.appointment-form {
+.card {
   background-color: #ffffff;
-  padding: 2rem;
-  max-width: 550px;
-  margin: auto;
+  padding: 2.25rem;
+  max-width: 35rem;
+  margin: 2rem auto;
+  border-radius: 1.5rem;
+  box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
 }
 
+.view-customer-heading {
+  max-width: 25rem;
+  margin: 3rem auto;
+  text-align: center;
+  color:#000000;
+
+  h1 {
+    font-size: 3.5rem;
+    font-weight: 900;
+    margin-bottom: 1rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    line-height: 1.25;
+  }
+}
+
+.slot-list {
+  display: grid;
+  grid-gap: 0.75rem;
+  grid-template-columns: repeat(5, 1fr);
+  list-style: none;
+  width: 100%;
+
+  .slot-select {
+    input[type="radio"] {
+      opacity: 0;
+      position: absolute;
+      pointer-events: none;
+
+      &[disabled] ~ .slot-time {
+        opacity: 0.35;
+      }
+
+      &:checked + .slot-time,
+      &:hover + .slot-time {
+        border-color: #00cf15;
+        cursor: pointer;
+      }
+    }
+    .slot-time {
+      border-radius: 0.25rem;
+      background-color: #fafafa;
+      border: 1px solid rgba(0, 0, 0, 10%);
+      height: 100%;
+      display: block;
+      text-align: center;
+      padding: 0.5rem;
+    }
+  }
+}
+
+.slot-container {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background-color: #fafafa;
+  border: 1px solid rgba(0, 0, 0, 10%);
+  border-radius: 0.25rem;
+  border-style: dashed;
+}
+
+li,
+ul {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}

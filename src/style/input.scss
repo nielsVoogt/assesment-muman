@@ -1,5 +1,6 @@
 .form-group {
   margin-bottom: 1rem;
+  position: relative;
 
   .form-control,
   .form-datepicker {
@@ -9,6 +10,11 @@
     border-radius: .25rem;
     background-color: #FAFAFA;
     border: 1px solid rgba(0,0,0,10%);
+
+    &:focus {
+      border-color: #00CF15;
+      outline: none;
+    }
   }
 
   &--error {
@@ -17,9 +23,19 @@
     }
   }
 
+  .error-msg {
+    font-size: .875rem;
+    color: red;
+  }
+
   .form-datepicker {
     display: flex;
-    
+
+    &:focus-within {
+      border-color: #00CF15;
+      outline: none;
+    }
+
     img {
       margin-left: auto;
     }
@@ -29,5 +45,39 @@
     font-weight: 600;
     margin-bottom: 0.5rem;
     display: block;
+  }
+}
+
+.form-checkbox {
+  display: block;
+  padding: .75rem;
+  position: relative;
+  
+  .form-checkbox-border {
+    border: 1px solid rgba(0,0,0,10%);
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: .25rem;
+  }
+
+  input[type="checkbox"] {
+    margin-right: .75rem;
+
+    &:checked + .form-checkbox-border {
+      border-color: #00CF15;
+    }
+  }
+
+  &:hover .form-checkbox-border {
+    border-color: #00CF15;
+    cursor: pointer;
+  }
+  
+
+  + #{&} {
+    margin-top: .5rem;
   }
 }

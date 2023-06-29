@@ -1,14 +1,18 @@
 <template>
   <ul class="slot-list">
     <li v-for="slot in slots" class="slot-list-item">
-      <button
-        type="button"
-        class="slot-button"
-        :disabled="unavailableSlots.find((e) => e === slot)"
-        @click="$emit('selectSlot', slot)"
-      >
-        {{ slot }}
-      </button>
+      <label class="slot-select">
+        <input
+          type="radio"
+          :value="slot"
+          name="slots"
+          @click="$emit('selectSlot', slot)"
+          :disabled="unavailableSlots.find((e) => e === slot)"
+        />
+        <span class="slot-time">
+          {{ slot }}
+        </span>
+      </label>
     </li>
   </ul>
 </template>
@@ -26,7 +30,6 @@ export default {
   },
   data() {
     return {
-      selectedSlot: null,
       unavailableSlots: [],
     };
   },
@@ -51,7 +54,7 @@ export default {
       const data = await response.json();
 
       data.forEach((appointment) => {
-        const slotTime = moment(appointment.date).format("hh:mm");
+        const slotTime = moment(appointment.date).format("HH:mm");
         this.unavailableSlots.push(slotTime);
       });
     },
@@ -63,41 +66,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-.slot-list {
-  display: grid;
-  grid-gap: 0.5rem;
-  grid-template-columns: repeat(5, 1fr);
-  list-style: none;
-  width: 100%;
-  aspect-ratio: 1 / 1;
-
-  .slot-button {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    width: 100%;
-  }
-}
-
-.slot-container {
-  width: 100%;
-  aspect-ratio: 1 / 1;
-
-  background-color: #fafafa;
-  border: 1px solid rgba(0, 0, 0, 10%);
-  border-radius: 0.25rem;
-  border-style: dashed;
-  // display: grid;
-  // justify-content: center;
-  // align-content: center;
-}
-
-li,
-ul {
-  margin: 0;
-  padding: 0;
-  border: 0;
-}
-</style>
