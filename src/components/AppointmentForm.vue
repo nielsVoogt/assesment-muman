@@ -70,7 +70,11 @@
         <template #default="{ togglePopover }">
           <div @click="togglePopover" class="form-datepicker" tabindex="0">
             <span>
-              {{ form.date ? formattedDate : "Select a date" }}
+              {{
+                form.date
+                  ? formatDate(form.date, "DD-MM-YYYY")
+                  : "Select a date"
+              }}
             </span>
             <img src="@/assets/calendar.svg?url" />
           </div>
@@ -84,7 +88,7 @@
     >
       <TimeSlots :date="form.date" @select-slot="setTime" />
     </FormGroup>
-    {{ v$.form.invalid }}
+
     <button class="button" type="submit" @click="post">
       <span> Save your date and timeslot </span>
     </button>
@@ -102,14 +106,17 @@ import { Calendar, DatePicker } from "v-calendar";
 import "v-calendar/style.css";
 
 import moment from "moment";
+import formatDateMixin from "@/mixins/formatDate.js";
 
 export default {
+  name: "AppointmentForm",
   components: {
     FormGroup,
     TimeSlots,
     Calendar,
     DatePicker,
   },
+  mixins: [formatDateMixin],
   setup() {
     return { v$: useVuelidate() };
   },
@@ -128,11 +135,6 @@ export default {
       },
     };
   },
-  computed: {
-    formattedDate: function () {
-      return moment(this.form.date).format("DD-MM-YYYY");
-    },
-  },
   methods: {
     async onSubmit() {
       const isFormCorrect = await this.v$.$validate();
@@ -141,7 +143,9 @@ export default {
       const { time, date, ...payload } = this.form;
 
       // Combine date and time
-      const dateTime = moment(date + time, "YYYY-MM-DDTHH:mm:ss.SSSS[Z]");
+      const d = moment(date, "YYYY-MM-DD");
+      const t = moment(time, "HH:mm:ss");
+      const dateTime = `${d.format("YYYY-MM-DD")}T${t.format("HH:mm:ss")}[Z]`;
 
       // Add to payload object
       payload.date = dateTime;

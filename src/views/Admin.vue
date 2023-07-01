@@ -1,8 +1,10 @@
 <template>
-  <h1>Admin view</h1>
-  <CustomerAppointments />
+  <div class="admin-container">
+    <h1>Upcoming appointments</h1>
+    <AppointmentsTable />
+  </div>
 </template>
 
 <script setup>
-import CustomerAppointments from '../components/CustomerAppointments.vue';
+import AppointmentsTable from "../components/AppointmentsTable.vue";
 </script>

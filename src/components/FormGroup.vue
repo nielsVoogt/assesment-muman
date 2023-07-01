@@ -13,7 +13,7 @@ export default {
   name: "FormGroup",
   props: {
     errors: {
-      type: [Array],
+      type: [Array, Boolean],
       required: false,
     },
     label: {

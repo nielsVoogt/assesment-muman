@@ -1,3 +1,6 @@
+
+// --------------------------------------- FORM GROUP
+
 .form-group {
   margin-bottom: 1rem;
   position: relative;
@@ -28,6 +31,12 @@
     color: red;
   }
 
+  .form-group-label {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
   .form-datepicker {
     display: flex;
 
@@ -40,13 +49,9 @@
       margin-left: auto;
     }
   }
-
-  .form-group-label {
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    display: block;
-  }
 }
+
+// --------------------------------------- CHECKBOX
 
 .form-checkbox {
   display: block;
@@ -76,7 +81,6 @@
     cursor: pointer;
   }
   
-
   + #{&} {
     margin-top: .5rem;
   }

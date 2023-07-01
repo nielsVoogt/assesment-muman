@@ -20,6 +20,14 @@
 <script>
 import moment from "moment";
 
+const slots = [];
+for (let i = 0; i < 32; i++) {
+  const slotTime = moment("09:00", "HH:mm")
+    .add(15 * i, "minutes")
+    .format("HH:mm");
+  slots.push(slotTime);
+}
+
 export default {
   name: "TimeSlots",
   props: {
@@ -31,25 +39,16 @@ export default {
   data() {
     return {
       unavailableSlots: [],
+      slots,
     };
-  },
-  setup() {
-    const slots = [];
-
-    for (let i = 0; i < 32; i++) {
-      const slotTime = moment("09:00", "HH:mm")
-        .add(15 * i, "minutes")
-        .format("HH:mm");
-      slots.push(slotTime);
-    }
-
-    return { moment, slots };
   },
   methods: {
     async getUnavailableSlots() {
       this.unavailableSlots = [];
+
       const date = moment(this.date).format("YYYY-MM-DD");
       const url = `http://localhost:3000/appointments?q=${date}`;
+
       const response = await fetch(url);
       const data = await response.json();
 
