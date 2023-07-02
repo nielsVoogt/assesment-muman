@@ -97,11 +97,11 @@ export default {
     async getAppointments(page, limit) {
       this.isLoading = true;
       const url = `http://localhost:3000/appointments?_page=${page}&_limit=${limit}`;
-      const response = await fetch(url);
-      const data = await response.json();
+      const res = await fetch(url);
+      const data = await res.json();
 
       this.rows = data;
-      this.totalRecords = response.headers.get("x-Total-Count");
+      this.totalRecords = res.headers.get("x-Total-Count");
       this.isLoading = false;
     },
   },

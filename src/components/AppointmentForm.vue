@@ -23,14 +23,11 @@
       />
     </FormGroup>
 
-    <FormGroup
-      :errors="v$.form.customer.phonenumber.$errors"
-      :label="'Phonenumber'"
-    >
+    <FormGroup :errors="v$.form.customer.phone.$errors" :label="'Phonenumber'">
       <input
         class="form-control"
         type="tel"
-        v-model="form.customer.phonenumber"
+        v-model="form.customer.phone"
         placeholder="Your phonenumber"
       />
     </FormGroup>
@@ -89,7 +86,7 @@
       <TimeSlots :date="form.date" @select-slot="setTime" />
     </FormGroup>
 
-    <button class="button" type="submit" @click="post">
+    <button class="button" type="submit" @click="post" :disabled="disabled">
       <span> Save your date and timeslot </span>
     </button>
   </form>
@@ -122,6 +119,7 @@ export default {
   },
   data() {
     return {
+      disabled: false,
       form: {
         customer: {
           firstName: "",
@@ -136,7 +134,28 @@ export default {
     };
   },
   methods: {
+    async checkDate(dateTime) {
+      const url = `http://localhost:3000/appointments?date=${dateTime}`;
+      const res = await fetch(url, {
+        method: "GET",
+        headers: { "Content-type": "application/json; charset=UTF-8" },
+      });
+
+      const data = await res.json();
+      return data.length === 0;
+    },
+    async setAppointment(payload) {
+      const url = `http://localhost:3000/appointments`;
+      const res = await fetch(url, {
+        method: "POST",
+        body: JSON.stringify(payload),
+        headers: { "Content-type": "application/json; charset=UTF-8" },
+      });
+      return res;
+    },
     async onSubmit() {
+      this.disabled = true;
+      // Validate form
       const isFormCorrect = await this.v$.$validate();
       if (!isFormCorrect) return;
 
@@ -145,23 +164,27 @@ export default {
       // Combine date and time
       const d = moment(date, "YYYY-MM-DD");
       const t = moment(time, "HH:mm:ss");
-      const dateTime = `${d.format("YYYY-MM-DD")}T${t.format("HH:mm:ss")}[Z]`;
+      const dateTime = `${d.format("YYYY-MM-DD")}T${t.format("HH:mm:ss")}Z`;
 
       // Add to payload object
       payload.date = dateTime;
 
-      const url = `http://localhost:3000/appointments`;
-      const res = await fetch(url, {
-        method: "POST",
-        body: JSON.stringify(payload),
-        headers: { "Content-type": "application/json; charset=UTF-8" },
-      });
-
-      if (res.ok) {
-        console.log("feestje!");
-      } else {
-        console.log("paniek!");
+      // Check if dateTime is available
+      const dateAvailable = await this.checkDate(dateTime);
+      if (!dateAvailable) {
+        alert(`Deze combinatie datum/tijd is al gekozen door iemand anders`);
+        this.form.date = null;
+        this.form.time = null;
+        this.disabled = false;
+        return;
       }
+
+      const res = await this.setAppointment(payload);
+      res.ok
+        ? alert(`Afspraak om ${d.format("YYYY-MM-DD")} ${t.format("HH:mm:ss")}`)
+        : alert(`Er is iets mis gegaan`);
+
+      this.disabled = false;
     },
     setTime(time) {
       this.form.time = time;
@@ -173,7 +196,7 @@ export default {
         customer: {
           firstName: { required },
           lastName: { required },
-          phonenumber: { required },
+          phone: { required },
         },
         reason: { required },
         date: { required },
