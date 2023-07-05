@@ -19,15 +19,7 @@
    npm run dev
    ```
 
-
-   // {
-//     "customer": {
-//         "firstName": "Daan",
-//         "lastName": "Visser",
-//         "phone": "555-1234"
-//     },
-//     "date": "2023-07-10",
-//     "slot": 3,
-//     "reason": ["maintenance"],
-//     "remarks": "Controleren en afstellen van de remmen."
-// }
+## Wat zouden toekomstige nuttige toevoegingen kunnen zijn voor de webapplicatie?
+- SMS bevestiging afspraak en notificatie voor fiets ophalen
+- Foto upload van probleem met de fiets
+- Email signup biedt meer opties voor upselling, digitale facturatie en nieuwsbrieven
